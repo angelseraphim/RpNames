@@ -35,7 +35,11 @@ namespace RpNames
         {
             Team team = ev.NewRole.GetTeam();
             if (!Config.NameConstructor.TryGetValue(team, out var constructor))
+            {
+                if (team == Team.Dead)
+                    ev.Player.DisplayNickname = null;
                 return;
+            }
 
             Timing.CallDelayed(0.1f, () => constructor.Apply(ev.Player));
         }
